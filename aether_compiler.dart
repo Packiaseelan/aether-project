@@ -1,37 +1,3 @@
-// ignore_for_file: avoid_print
-import 'dart:io';
-
-void main() async {
-  print('===================================================');
-  print('🛠️  Aether Environment Setup');
-  print('===================================================');
-
-  final pubspec = File('pubspec.yaml');
-  if (!pubspec.existsSync()) {
-    print('❌ ERROR: pubspec.yaml not found.');
-    exit(1);
-  }
-
-  // Generate the compiler script
-  _generateCompilerScript();
-
-  // Setup git hook
-  final hookFile = File('.git/hooks/pre-commit');
-  final hookCommand = 'dart aether_compiler.dart\ngit add AETHER_TELEMETRY.md';
-  
-  if (hookFile.parent.existsSync()) {
-    hookFile.writeAsStringSync('#!/bin/sh\n$hookCommand\n');
-    if (!Platform.isWindows) {
-      await Process.run('chmod', ['+x', hookFile.path]);
-    }
-  }
-
-  print('\n✅ SETUP COMPLETE. The Aether "Flight Recorder" is active.');
-  print('===================================================');
-}
-
-void _generateCompilerScript() {
-  const compilerCode = r'''
 import 'dart:io';
 
 void main() {
@@ -79,8 +45,4 @@ void main() {
   }
 
   telemetryFile.writeAsStringSync(output.toString());
-}
-''';
-
-  File('aether_compiler.dart').writeAsStringSync(compilerCode);
 }

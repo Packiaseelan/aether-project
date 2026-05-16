@@ -1,10 +1,10 @@
+// ignore_for_file: avoid_print
 import 'dart:io';
 
 void main() async {
   print('===================================================');
   print('🛡️  Aether Architecture Linter (Diagnostic Mode) 🛡️');
-  print('===================================================
-');
+  print('===================================================');
 
   final pubspec = File('pubspec.yaml');
   if (!pubspec.existsSync()) {
